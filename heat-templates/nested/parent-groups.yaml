@@ -1,0 +1,21 @@
+heat_template_version: 2013-05-23
+
+description: parent template
+
+parameters:
+
+  parent-p1:
+    description: parent first parameter
+    type: string
+    default: 'foo'
+
+resources:
+
+  level-1-groups:
+    type: OS::Heat::ResourceGroup
+    properties:
+      count: 1
+      resource_def:
+        type: jdob::Level1
+        properties:
+          level-1-p1: 'parent-set-value-1'

@@ -1,0 +1,19 @@
+heat_template_version: 2013-05-23
+
+description: level 2 nested template
+
+parameters:
+
+  level-2-p1:
+    type: string
+    description: must be set by parent; should not appear in nested params list
+
+  level-2-p2-optional:
+    type: string
+    description: not set by parent, should be considered a param_default parameter
+    default: ''
+
+resources:
+
+  level-2-simple-resource:
+    type: OS::Heat::RandomString

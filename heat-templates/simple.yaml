@@ -1,0 +1,19 @@
+heat_template_version: 2013-05-23
+
+description: simple template for testing purposes
+
+parameters:
+  username:
+    type: string
+    description: username of the user being created
+    default: 'foo'
+
+resources:
+  password:
+    type: OS::Heat::RandomString
+
+outputs:
+  generated-password:
+    description: generated random string
+    value: { get_resource: password }
+

@@ -1,0 +1,21 @@
+heat_template_version: 2013-05-23
+
+description: level 1 nested template
+
+parameters:
+
+  level-1-p1:
+    type: string
+    description: must be set by parent; should not appear in nested params list
+
+  level-1-p2-optional:
+    type: string
+    description: not set by parent, should be considered a param_default parameter
+    default: ''
+
+resources:
+
+  level-2-resource:
+    type: jdob::Level2
+    properties:
+      level-2-p1: 'level-1-set-value'
