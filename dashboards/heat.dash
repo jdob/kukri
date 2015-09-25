@@ -1,0 +1,20 @@
+[dashboard]
+title = Heat Dashboard
+description = Heat Dashboard
+foreach = (project:openstack/heat OR
+           project:openstack/python-heatclient  OR
+           project:openstack/heat-specs) status:open
+
+[section "My Patches"]
+query = owner:self
+
+[section "Heat"]
+query = project:openstack/heat
+
+[section "Heat Client"]
+query = project:openstack/python-heatclient
+
+[section "Heat Specs"]
+query = project:openstack/heat-specs
+
+
