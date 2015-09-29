@@ -1,0 +1,90 @@
+heat_template_version: 2015-04-30
+
+description: deploys a single server and runs a Puppet module on it
+
+parameters:
+
+  image:
+    description: image to use when creating the node
+    type: string
+    constraints:
+      - custom_constraint: glance.image
+  flavor:
+    description: node flavor to deploy on
+    type: string
+    default: m1.tiny
+    constraints:
+      - custom_constraint: nova.flavor
+  key_name:
+    description: key-pair to associate with the instance
+    type: string
+    default: heat-key
+    constraints:
+      - custom_constraint: nova.keypair
+
+resources:
+
+  ex_server:
+    type: OS::Nova::Server
+    properties:
+      name: localhost
+      image: {get_param: image}
+      flavor: {get_param: flavor}
+      key_name: {get_param: key_name}
+      user_data_format: SOFTWARE_CONFIG
+
+  script_config:
+    type: OS::Heat::SoftwareConfig
+    properties:
+      group: script
+      config: |
+        #!/bin/bash
+        echo "example bash script execution" > /tmp/example_bash_script
+
+  script_deployment:
+    type: OS::Heat::SoftwareDeployment
+    properties:
+      server: {get_resource: ex_server}
+      config: {get_resource: script_config}
+
+  hiera_config:
+    type: OS::Heat::StructuredConfig
+    properties:
+      group: os-apply-config
+      config:
+        hiera:
+          hierarchy:
+            - dynamic_hiera
+            - static_hiera
+          datafiles:
+            static_hiera:
+              raw_data: {get_file: static_hiera.yaml}
+            dynamic_hiera:
+              mapped_data:
+                example_heat_key: dynamic_heat_value
+                dynamic_hiera_key: dynamic_hiera_value
+
+  hiera_deployment:
+    type: OS::Heat::StructuredDeployment
+    properties:
+      server: {get_resource: ex_server}
+      config: {get_resource: hiera_config}
+
+  puppet_script_config:
+    type: OS::Heat::SoftwareConfig
+    properties:
+      group: puppet
+      options:
+        enable_hiera: True
+        enable_facter: False
+      outputs:
+        - name: result
+      config:
+        get_file: example_puppet.pp
+
+  puppet_script_deployment:
+    type: OS::Heat::StructuredDeployment
+    depends_on: hiera_deployment
+    properties:
+      server:  {get_resource: ex_server}
+      config: {get_resource: puppet_script_config}

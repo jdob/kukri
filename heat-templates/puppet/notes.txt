@@ -1,0 +1,22 @@
+  hiera_file_data:
+    type: OS::Heat::StructuredConfig
+    properties:
+      group: os-apply-config
+      config:
+        hiera:
+          hierarchy:
+            - jdob1
+            - jdob2
+          data_files:
+            jdob1:
+              mapped_data:
+                example1: foo
+            jdob2:
+              mapped_data:
+                example2: bar
+
+  hiera_file_create:
+    type: OS::Heat::StructuredDeployment
+    properties:
+      config: {get_resource: hiera_file_data}
+      server: {get_resource: my_server}
