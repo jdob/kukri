@@ -1,0 +1,6 @@
+resource_registry:
+  jdob::Level1: level-1.yaml
+  jdob::Level2: level-2.yaml
+
+parameter_defaults:
+  level-2-p2-optional: 'foo'
