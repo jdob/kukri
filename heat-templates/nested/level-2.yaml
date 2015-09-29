@@ -6,7 +6,7 @@ parameters:
 
   level-2-p1:
     type: string
-    description: must be set by parent; should not appear in nested params list
+    description: must be set by parent; should have a value in the nested params list
 
   level-2-p2-optional:
     type: string
