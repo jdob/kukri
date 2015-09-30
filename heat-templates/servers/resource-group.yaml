@@ -1,0 +1,45 @@
+heat_template_version: 2015-04-30
+
+description: deploys multiple servers in a resource group
+
+parameters:
+
+  image:
+    type: string
+    description: image ID or image name to use for the server
+    default: cirros-0.3.4-x86_64-uec
+    constraints:
+      - custom_constraint: glance.image
+  key_name:
+    type: string
+    description: existing key pair to use for the server
+    default: heat-key
+    constraints:
+      - custom_constraint: nova.keypair
+  flavor:
+    type: string
+    description: flavor for the server to be created
+    default: m1.tiny
+    constraints:
+      - custom_constraint: nova.flavor
+  node_count:
+    type: number
+    description: number of nodes to create
+    default: 2
+
+resources:
+  group-servers:
+    type: OS::Heat::ResourceGroup
+    properties:
+      count: { get_param: node_count }
+      resource_def:
+        type: OS::Nova::Server
+        properties:
+          key_name: { get_param: key_name }
+          image: { get_param: image }
+          flavor: { get_param: flavor }
+
+outputs:
+  server_networks:
+    description: The networks of the deployed server
+    value: { get_attr: [group-servers, networks] }
