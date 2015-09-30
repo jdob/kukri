@@ -40,6 +40,15 @@ resources:
           flavor: { get_param: flavor }
 
 outputs:
+  server_0_id:
+    description: id of the first node created
+    value: { get_attr: [group-servers, resource.0] }
+  server_0_networks:
+    description: networks on the first node
+    value: { get_attr: [group-servers, resource.0, networks] }
+  server_0_networks_alt:
+    description: alternate way to retrieve the first node's networks
+    value: { get_attr: [group-servers, resource.0.networks] }
   server_networks:
-    description: The networks of the deployed server
+    description: all node networks
     value: { get_attr: [group-servers, networks] }
