@@ -1,4 +1,4 @@
-heat_template_version: 2013-05-23
+heat_template_version: 2015-04-30
 
 description: deploys a single server
 
@@ -7,6 +7,7 @@ parameters:
   image:
     type: string
     description: image ID or image name to use for the server
+    default: cirros-0.3.4-x86_64-uec
     constraints:
       - custom_constraint: glance.image
   key_name:
@@ -32,5 +33,5 @@ resources:
 
 outputs:
   server_networks:
-    description: The networks of the deployed server
+    description: networks of the deployed server
     value: { get_attr: [server, networks] }
