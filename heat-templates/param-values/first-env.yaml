@@ -1,5 +1,7 @@
 parameters:
   p2: first-p2
+  p4: first-p4
 
 parameter_defaults:
   p3: first-p3
+  p5: first-p5

@@ -1,5 +1,7 @@
 parameters:
   p3: second-p3
+  p4: second-p4
 
 parameter_defaults:
   p2: second-p2
+  p5: second-p5

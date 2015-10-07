@@ -14,6 +14,14 @@ parameters:
     type: string
     default: template-default-p3
 
+  p4:
+    type: string
+    default: template-default-p4
+
+  p5:
+    type: string
+    default: template-default-p5
+
 outputs:
 
   p1-value:
@@ -22,8 +30,16 @@ outputs:
 
   p2-value:
     value: { get_param: p2 }
-    description: set as parameter in first env, parameter_default in second
+    description: set in parameters in first env, parameter_defaults in second
 
   p3-value:
     value: { get_param: p3 }
-    description: set as parameter_default in first env, parameter in second
+    description: set in parameter_defaults in first env, parameters in second
+
+  p4-value:
+    value: { get_param: p4 }
+    description: set in parameters in both first and second
+
+  p5-value:
+    value: { get_param: p5 }
+    description: set in parameter_defaults in both first and second
