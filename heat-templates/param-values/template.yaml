@@ -1,0 +1,29 @@
+heat_template_version: 2015-04-30
+
+parameters:
+
+  p1:
+    type: string
+    default: template-default-p1
+
+  p2:
+    type: string
+    default: template-default-p2
+
+  p3:
+    type: string
+    default: template-default-p3
+
+outputs:
+
+  p1-value:
+    value: { get_param: p1 }
+    description: not overridden in an environment file
+
+  p2-value:
+    value: { get_param: p2 }
+    description: set as parameter in first env, parameter_default in second
+
+  p3-value:
+    value: { get_param: p3 }
+    description: set as parameter_default in first env, parameter in second
