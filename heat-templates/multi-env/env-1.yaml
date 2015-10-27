@@ -1,0 +1,3 @@
+parameters:
+  p1: CORRECT
+  p2: INCORRECT-ENV-1

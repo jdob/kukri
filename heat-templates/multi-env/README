@@ -1,0 +1,5 @@
+Examples used when writting/debugging/testing server-side
+multiple environment support:
+
+* https://blueprints.launchpad.net/heat/+spec/multi-environments
+* https://review.openstack.org/#/c/234356/2/specs/mitaka/multi-environments.rst

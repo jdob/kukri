@@ -1,0 +1,13 @@
+heat_template_version: 2015-04-30
+
+parameters:
+
+  p1:
+    type: string
+    description: set in env-1
+    default: UNSET
+
+  p2:
+    type: string
+    description: set in env-2
+    default: UNSET
