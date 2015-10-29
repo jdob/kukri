@@ -11,3 +11,11 @@ parameters:
     type: string
     description: set in env-2
     default: UNSET
+
+resources:
+
+  r1:
+    type: jdob::Resource1
+
+  r2:
+    type: jdob::Resource2

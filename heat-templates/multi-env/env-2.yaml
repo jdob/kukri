@@ -1,2 +1,5 @@
 parameters:
   p2: CORRECT
+
+resource_registry:
+  jdob::Resource2: OS::Heat::None

@@ -1,3 +1,6 @@
 parameters:
   p1: CORRECT
   p2: INCORRECT-ENV-1
+
+resource_registry:
+  jdob::Resource1: OS::Heat::None
