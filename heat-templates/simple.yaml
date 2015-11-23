@@ -11,6 +11,8 @@ parameters:
 resources:
   password:
     type: OS::Heat::RandomString
+    properties:
+      length: 8
 
 outputs:
   generated-password:
