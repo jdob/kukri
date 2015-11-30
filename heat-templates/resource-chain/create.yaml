@@ -1,0 +1,19 @@
+heat_template_version: 2016-04-08
+
+description: simple template for testing purposes
+
+parameters:
+  username:
+    type: string
+    description: username of the user being created
+    default: 'foo'
+
+resources:
+  my-chain:
+    type: OS::Heat::ResourceChain
+    properties:
+      resources: ['OS::Heat::RandomString', 'OS::Heat::RandomString']
+
+outputs:
+  string-1:
+    value: { get_attr: [my-chain, resource.0, value] }

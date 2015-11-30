@@ -1,0 +1,15 @@
+heat_template_version: 2016-04-08
+
+description: added a third resource into the chain
+
+parameters:
+  username:
+    type: string
+    description: username of the user being created
+    default: 'foo'
+
+resources:
+  my-chain:
+    type: OS::Heat::ResourceChain
+    properties:
+      resources: ['OS::Heat::RandomString', 'OS::Heat::RandomString', 'OS::Heat::None']
