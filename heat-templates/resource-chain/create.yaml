@@ -15,5 +15,9 @@ resources:
       resources: ['OS::Heat::RandomString', 'OS::Heat::RandomString']
 
 outputs:
-  string-1:
+  resource-ids:
+    value: { get_attr: [my-chain, refs] }
+  resource-0-value:
     value: { get_attr: [my-chain, resource.0, value] }
+  all-resource-attrs:
+    value: { get_attr: [my-chain, attributes, value] }
