@@ -1,0 +1,4 @@
+Templates to reproduce an issue where missing values for required
+parameters fail validation only when --show-nested is specified
+
+https://bugs.launchpad.net/heat/+bug/1508857

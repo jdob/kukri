@@ -1,0 +1,9 @@
+heat_template_version: 2015-04-30
+
+parameters:
+  top-level:
+    type: string
+
+resources:
+  nested-1:
+    type: jdob::Nested1

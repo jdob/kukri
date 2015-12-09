@@ -1,0 +1,9 @@
+heat_template_version: 2015-04-30
+
+parameters:
+  nested-2-param:
+    type: string
+
+resources:
+  empty:
+    type: OS::Heat::None
