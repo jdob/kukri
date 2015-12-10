@@ -7,3 +7,5 @@ parameters:
 resources:
   nested-2:
     type: jdob::Nested2
+    properties:
+      nested-2-param: {get_param: nested-1-param}
