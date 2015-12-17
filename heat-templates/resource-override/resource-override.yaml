@@ -1,0 +1,8 @@
+heat_template_version: 2015-04-30
+
+resources:
+
+  r1:
+    type: jdob::R1
+  r2:
+    type: jdob::R1

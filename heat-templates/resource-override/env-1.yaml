@@ -1,0 +1,2 @@
+resource_registry:
+  jdob::R1: OS::Heat::None

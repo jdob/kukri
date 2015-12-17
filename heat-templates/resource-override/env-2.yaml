@@ -1,0 +1,4 @@
+resource_registry:
+  resources:
+    r2:
+      jdob::R1: OS::Heat::RandomString
