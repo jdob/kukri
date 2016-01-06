@@ -1,0 +1,22 @@
+heat_template_version: 2015-04-30
+
+description: child template
+
+parameters:
+
+  p1:
+    description: passed in as an attribute of another parent resource
+    type: string
+
+  p2:
+    description: passed in from parameter value in parent template
+    type: string
+
+  p3:
+    description: literal hardcoded in child resource definition
+    type: string
+
+resources:
+
+  dummy:
+    type: OS::Heat::None

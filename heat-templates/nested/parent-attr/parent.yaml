@@ -1,0 +1,23 @@
+heat_template_version: 2015-04-30
+
+description: parent template
+
+parameters:
+
+  input-1:
+    type: string
+    default: default-input
+
+resources:
+
+  rand:
+    type: OS::Heat::RandomString
+    properties:
+      length: 4
+
+  child:
+    type: jdob::Child
+    properties:
+      p1: { get_attr: [rand, value] }
+      p2: { get_param: input-1 }
+      p3: hard-coded
