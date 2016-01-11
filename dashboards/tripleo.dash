@@ -20,14 +20,9 @@ foreach = (project:openstack/tripleo-incubator OR
 [section "My Patches"]
 query = owner:self NOT project:openstack/tripleo-specs
 
-[section "Tuskar"]
-query = project:openstack/tuskar
-
-[section "NetApp"]
-query = owner:"Ryan Hefner"
+[section "Specs"]
+query = project:openstack/tripleo-specs
 
 [section "TripleO Heat Templates"]
 query = project:openstack/tripleo-heat-templates
 
-[section "Tuskar Client"]
-query = project:openstack/python-tuskarclient
