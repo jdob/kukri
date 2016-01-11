@@ -4,17 +4,22 @@ description: child template
 
 parameters:
 
-  p1:
+  attr-value:
     description: passed in as an attribute of another parent resource
     type: string
 
-  p2:
+  param-value:
     description: passed in from parameter value in parent template
     type: string
 
-  p3:
+  literal-value:
     description: literal hardcoded in child resource definition
     type: string
+
+  unspecified-value:
+    description: unspecified by parent
+    type: string
+    default: default-in-child
 
 resources:
 

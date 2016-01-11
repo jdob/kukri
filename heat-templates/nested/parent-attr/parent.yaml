@@ -6,7 +6,6 @@ parameters:
 
   input-1:
     type: string
-    default: default-input
 
 resources:
 
@@ -18,6 +17,6 @@ resources:
   child:
     type: jdob::Child
     properties:
-      p1: { get_attr: [rand, value] }
-      p2: { get_param: input-1 }
-      p3: hard-coded
+      attr-value: { get_attr: [rand, value] }
+      param-value: { get_param: input-1 }
+      literal-value: hard-coded
