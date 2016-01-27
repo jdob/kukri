@@ -1,0 +1,72 @@
+heat_template_version: 2015-04-30
+
+parameters:
+
+  key_name:
+    type: string
+    description: keypair to enable SSH access to the instance
+    default: demo-key
+
+  image_id:
+    type: string
+    description: ID of the image to use for the instance
+    default: cirros-0.3.4-x86_64-uec
+    constraints:
+      - allowed_values: ['cirros-0.3.4-x86_64-uec', 'fedora-22.x86_64']
+
+  volume_size:
+    type: number
+    description: size of volume to attach to instance
+    default: 1
+    constraints:
+      - range: {min: 1, max: 10}
+
+  flavor:
+    type: string
+    description: Nova flavor of the instance to create
+    default: m1.tiny
+    constraints:
+      - allowed_values: ['m1.tiny', 'm1.small', 'm1.medium']
+
+resources:
+
+  instance:
+    type: OS::Nova::Server
+    properties:
+      image: { get_param: image_id }
+      flavor: { get_param: flavor }
+      key_name: { get_param: key_name }
+      user_data_format: RAW
+      user_data: |
+        #!/bin/sh
+        # Trigger rescan to ensure we see the attached volume
+        for i in /sys/class/scsi_host/*; do echo "- - -" > $i/scan; done
+        # Wait for the rescan as the volume doesn't appear immediately
+        for i in $(seq 10)
+        do
+          grep -q vdb /proc/partitions && break
+          sleep 1
+        done
+        if grep -q vdb /proc/partitions
+        then
+          mkfs.ext4 /dev/vdb
+          mount /dev/vdb /mnt
+          echo "demo" > /mnt/demo-file
+        fi
+
+  volume:
+    type: OS::Cinder::Volume
+    properties:
+      size: { get_param: volume_size }
+      description: volume for stack
+
+  volume_attachment:
+    type: OS::Cinder::VolumeAttachment
+    properties:
+      volume_id: { get_resource: volume }
+      instance_uuid: { get_resource: instance }
+
+outputs:
+  ip_address:
+    description: assigned IP address of the instance
+    value: {get_attr: [instance, first_address]}

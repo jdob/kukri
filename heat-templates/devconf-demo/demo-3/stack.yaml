@@ -1,0 +1,36 @@
+heat_template_version: 2015-04-30
+
+parameters:
+
+  parent_key_name:
+    type: string
+    description: keypair to enable SSH access to the instance
+
+  parent_image_id:
+    type: string
+    description: ID of the image to use for the instance
+
+  parent_volume_size:
+    type: number
+    description: size of volume to attach to instance
+
+  parent_flavor:
+    type: string
+    description: Nova flavor of the instance to create
+
+resources:
+
+  nested-instance:
+    type: jdob::DemoServer
+    properties:
+      image_id: { get_param: parent_image_id }
+      flavor: { get_param: parent_flavor }
+      key_name: { get_param: parent_key_name }
+      volume_size: { get_param: parent_volume_size }
+
+      demo_text: { get_file: gf.txt }
+
+outputs:
+  ip_address:
+    description: assigned IP address of the instance
+    value: {get_attr: [nested-instance, ip_address]}

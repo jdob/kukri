@@ -1,0 +1,45 @@
+heat_template_version: 2015-04-30
+
+parameters:
+
+  parent_key_name:
+    type: string
+    description: keypair to enable SSH access to the instance
+
+  parent_image_id:
+    type: string
+    description: ID of the image to use for the instance
+
+  parent_volume_size:
+    type: number
+    description: size of volume to attach to instance
+
+  parent_flavor:
+    type: string
+    description: Nova flavor of the instance to create
+
+resources:
+
+  demo-servers:
+    type: OS::Heat::ResourceGroup
+    properties:
+      count: 2
+      resource_def:
+        type: jdob::DemoServer
+        properties:
+          image_id: { get_param: parent_image_id }
+          flavor: { get_param: parent_flavor }
+          key_name: { get_param: parent_key_name }
+          volume_size: { get_param: parent_volume_size }
+          demo_text: 'Groups Example'
+
+outputs:
+  server_0_networks:
+    description: networks on the first node
+    value: { get_attr: [demo-servers, resource.0, ip_address] }
+  server_0_networks_alt:
+    description: alternate way to retrieve the first node's networks
+    value: { get_attr: [demo-servers, resource.0.ip_address] }
+  server_networks:
+    description: all node networks
+    value: { get_attr: [demo-servers, attributes, ip_address] }

@@ -1,0 +1,70 @@
+heat_template_version: 2015-04-30
+
+parameters:
+
+  key_name:
+    type: string
+    description: keypair to enable SSH access to the instance
+
+  image_id:
+    type: string
+    description: ID of the image to use for the instance
+
+  volume_size:
+    type: number
+    description: size of volume to attach to instance
+
+  flavor:
+    type: string
+    description: Nova flavor of the instance to create
+
+  demo_text:
+    type: string
+    description: demo text to stuff into sample file
+
+resources:
+
+  instance:
+    type: OS::Nova::Server
+    properties:
+      image: { get_param: image_id }
+      flavor: { get_param: flavor }
+      key_name: { get_param: key_name }
+      user_data_format: RAW
+      user_data:
+        str_replace:
+          template: |
+            #!/bin/sh
+            # Trigger rescan to ensure we see the attached volume
+            for i in /sys/class/scsi_host/*; do echo "- - -" > $i/scan; done
+            # Wait for the rescan as the volume doesn't appear immediately
+            for i in $(seq 10)
+            do
+              grep -q vdb /proc/partitions && break
+              sleep 1
+            done
+            if grep -q vdb /proc/partitions
+            then
+              mkfs.ext4 /dev/vdb
+              mount /dev/vdb /mnt
+              echo "DEMO_TEXT" > /mnt/demo-file
+            fi
+          params:
+            DEMO_TEXT: { get_param: demo_text }
+
+  volume:
+    type: OS::Cinder::Volume
+    properties:
+      size: { get_param: volume_size }
+      description: volume for stack
+
+  volume_attachment:
+    type: OS::Cinder::VolumeAttachment
+    properties:
+      volume_id: { get_resource: volume }
+      instance_uuid: { get_resource: instance }
+
+outputs:
+  ip_address:
+    description: assigned IP address of the instance
+    value: {get_attr: [instance, first_address]}
