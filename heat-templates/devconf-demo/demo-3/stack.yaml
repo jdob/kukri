@@ -27,10 +27,9 @@ resources:
       flavor: { get_param: parent_flavor }
       key_name: { get_param: parent_key_name }
       volume_size: { get_param: parent_volume_size }
-
       demo_text: { get_file: gf.txt }
 
 outputs:
-  ip_address:
+  nested-networks:
     description: assigned IP address of the instance
-    value: {get_attr: [nested-instance, ip_address]}
+    value: {get_attr: [nested-instance, networks]}

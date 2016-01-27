@@ -66,6 +66,6 @@ resources:
       instance_uuid: { get_resource: my_instance }
 
 outputs:
-  ip_address:
+  networks:
     description: assigned IP address of the instance
     value: {get_attr: [my_instance, networks]}
