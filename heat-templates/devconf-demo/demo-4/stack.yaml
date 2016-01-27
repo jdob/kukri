@@ -36,10 +36,10 @@ resources:
 outputs:
   server_0_networks:
     description: networks on the first node
-    value: { get_attr: [demo-servers, resource.0, ip_address] }
+    value: { get_attr: [demo-servers, resource.0, networks] }
   server_0_networks_alt:
     description: alternate way to retrieve the first node's networks
-    value: { get_attr: [demo-servers, resource.0.ip_address] }
+    value: { get_attr: [demo-servers, resource.0.networks] }
   server_networks:
     description: all node networks
-    value: { get_attr: [demo-servers, attributes, ip_address] }
+    value: { get_attr: [demo-servers, attributes, networks] }

@@ -24,12 +24,13 @@ parameters:
 
 resources:
 
-  instance:
+  my_instance:
     type: OS::Nova::Server
     properties:
       image: { get_param: image_id }
       flavor: { get_param: flavor }
       key_name: { get_param: key_name }
+
       user_data_format: RAW
       user_data:
         str_replace:
@@ -62,9 +63,9 @@ resources:
     type: OS::Cinder::VolumeAttachment
     properties:
       volume_id: { get_resource: volume }
-      instance_uuid: { get_resource: instance }
+      instance_uuid: { get_resource: my_instance }
 
 outputs:
-  ip_address:
+  networks:
     description: assigned IP address of the instance
-    value: {get_attr: [instance, first_address]}
+    value: {get_attr: [my_instance, networks]}
