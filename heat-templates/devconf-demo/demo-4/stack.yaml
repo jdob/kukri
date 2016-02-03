@@ -18,12 +18,16 @@ parameters:
     type: string
     description: Nova flavor of the instance to create
 
+  demo_count:
+    type: number
+    description: number of servers to create
+
 resources:
 
   demo-servers:
     type: OS::Heat::ResourceGroup
     properties:
-      count: 2
+      count: { get_param: demo_count }
       resource_def:
         type: jdob::DemoServer
         properties:
