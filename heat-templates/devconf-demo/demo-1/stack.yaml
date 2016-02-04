@@ -25,6 +25,10 @@ parameters:
     type: string
     description: demo text to stuff into sample file
 
+  super_secret_text:
+    type: string
+    description: stuff we don't want mere mortals to view
+    hidden: true
 
 resources:
 
