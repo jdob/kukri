@@ -1,0 +1,23 @@
+heat_template_version: 2016-04-08
+
+parameters:
+
+  p1:
+    type: string
+    default: v1
+
+  p2:
+    type: number
+    default: 2
+
+  p3:
+    type: string
+    constraints:
+      - length: { min: 4, max: 8 }
+    default: xxxx
+
+  p4:
+    type: string
+    constraints:
+      - allowed_pattern: "[A-Z]+[a-zA-Z0-9]*"
+    default: A
