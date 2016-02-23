@@ -1,0 +1,9 @@
+heat_template_version: 2016-04-08
+
+parameters:
+
+  chain-types:
+    type: comma_delimited_list
+    default: ['OS::Heat::RandomString', 'OS::Heat::RandomString']
+    constraints:
+      - custom_constraint: heat.resource_type
