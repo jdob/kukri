@@ -1,0 +1,17 @@
+heat_template_version: 2016-04-08
+
+description: simple template for testing purposes
+
+resources:
+  group-strings:
+    type: OS::Heat::ResourceGroup
+    properties:
+      count: 4
+      resource_def:
+        type: OS::Heat::RandomString
+        properties:
+          length: 8
+
+outputs:
+  all-strings:
+    value: { get_resource: group-strings }
