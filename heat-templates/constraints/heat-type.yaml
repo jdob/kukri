@@ -7,3 +7,10 @@ parameters:
     default: ['OS::Heat::RandomString', 'OS::Heat::RandomString']
     constraints:
       - custom_constraint: heat.resource_type
+
+resources:
+
+  my-chain:
+    type: OS::Heat::ResourceChain
+    properties:
+      resources: { get_param: chain-types }

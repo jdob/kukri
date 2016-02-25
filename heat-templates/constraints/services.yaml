@@ -1,0 +1,15 @@
+heat_template_version: 2016-04-08
+
+parameters:
+
+  glance-image:
+    type: string
+    default: cirros-0.3.4-x86_64-uec
+    constraints:
+      - custom_constraint: glance.image
+
+  nova-flavor:
+    type: string
+    default: m1.tiny
+    constraints:
+      - custom_constraint: nova.flavor
