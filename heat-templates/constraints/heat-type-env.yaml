@@ -1,2 +1,5 @@
+parameters:
+  chain-types: ['jdob::Test']
+
 resource_registry:
   jdob::Test: OS::Heat::None
