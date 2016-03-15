@@ -3,7 +3,8 @@
 # Builds an image with the necessary hooks to call back into Heat's
 # software deployment functionality.
 
-# Requires the following repositories (download and pip install into a venv):
+# This script must be run in the root directory of the following repositories
+# (download and pip install into a venv):
 # - https://git.openstack.org/openstack/diskimage-builder.git
 # - https://git.OpenStack.org/OpenStack/tripleo-image-elements.git
 # - https://git.openstack.org/openstack/heat-templates.git
@@ -13,6 +14,7 @@ export OS=${OS:-"fedora"}   # fedora centos7, debian, opensuse, rhel, rhel7, or 
 export IMAGE_NAME=${IMAGE_NAME:-"software-deployment-image"}
 export IMAGE_PATH=${IMAGE_PATH:-"/tmp"}
 export DEPLOYMENT_TOOLS=${DEPLOYMENT_TOOLS:-""}  # heat-config-cfn-init, heat-config-puppet, heat-config-salt
+# export DIB_LOCAL_IMAGE=""  # location of the local image to build from instead of downloading
 
 # Fairly standard stuff for software deployments
 export ELEMENTS_PATH=tripleo-image-elements/elements:heat-templates/hot/software-config/elements
