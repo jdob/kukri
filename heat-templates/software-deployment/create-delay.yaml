@@ -28,7 +28,7 @@ resources:
       flavor: { get_param: flavor }
       user_data_format: SOFTWARE_CONFIG
 
-  delete_config:
+  create_config:
     type: OS::Heat::SoftwareConfig
     properties:
       group: script
@@ -39,10 +39,10 @@ resources:
         echo "About to sleep for a really long time" > $heat_outputs_path.status
         sleep 60
 
-  delete_deployment:
+  create_deployment:
     type: OS::Heat::SoftwareDeployment
     properties:
       server: { get_resource: server }
-      config: { get_resource: delete_config }
-      actions: ['DELETE']
+      config: { get_resource: create_config }
+      actions: ['CREATE']
       timeout: { get_param: deploy_timeout }
