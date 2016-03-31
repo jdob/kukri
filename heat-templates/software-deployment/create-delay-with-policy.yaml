@@ -1,0 +1,53 @@
+heat_template_version: 2014-10-16
+
+parameters:
+
+  image:
+    type: string
+    default: fedora-sd
+
+  key_name:
+    type: string
+    default: heat-key
+
+  flavor:
+    type: string
+    default: m1.small
+
+  deploy_timeout:
+    type: number
+    default: 5
+
+  deploy_timeout_policy:
+    type: string
+    default: SKIP
+
+resources:
+
+  server:
+    type: OS::Nova::Server
+    properties:
+      key_name: { get_param: key_name }
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      user_data_format: SOFTWARE_CONFIG
+
+  create_config:
+    type: OS::Heat::SoftwareConfig
+    properties:
+      group: script
+      outputs:
+      - name: status
+      config: |
+        #!/bin/sh -x
+        echo "About to sleep for a really long time" > $heat_outputs_path.status
+        sleep 60
+
+  create_deployment:
+    type: OS::Heat::SoftwareDeployment
+    properties:
+      server: { get_resource: server }
+      config: { get_resource: create_config }
+      actions: ['CREATE']
+      timeout: { get_param: deploy_timeout }
+      timeout_policy: { get_param: deploy_timeout_policy }
