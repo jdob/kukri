@@ -38,3 +38,6 @@ outputs:
   server_ip:
     description: first IP of the deployed server
     value: { get_attr: [server, networks, private, 1] }
+  server_id:
+    description: Nova ID of the deployed server
+    value: { get_resource: server }
