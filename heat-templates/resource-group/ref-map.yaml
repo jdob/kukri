@@ -1,0 +1,36 @@
+heat_template_version: 2016-04-08
+
+parameters:
+
+  image:
+    type: string
+    default: cirros-0.3.4-x86_64-uec
+
+  key_name:
+    type: string
+    default: heat-key
+
+  flavor:
+    type: string
+    default: m1.small
+
+  node_count:
+    type: number
+    default: 2
+
+resources:
+
+  servers:
+    type: OS::Heat::ResourceGroup
+    properties:
+      count: { get_param: node_count }
+      resource_def:
+        type: OS::Nova::Server
+        properties:
+          key_name: { get_param: key_name }
+          image: { get_param: image }
+          flavor: { get_param: flavor }
+
+outputs:
+  resource_map:
+    value: { get_attr: [servers, refs_map] }
