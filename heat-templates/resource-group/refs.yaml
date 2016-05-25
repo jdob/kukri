@@ -32,5 +32,7 @@ resources:
           flavor: { get_param: flavor }
 
 outputs:
+  resource_refs:
+    value: { get_attr: [servers, refs] }
   resource_map:
     value: { get_attr: [servers, refs_map] }
