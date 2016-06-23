@@ -30,14 +30,9 @@ resources:
       key_name: { get_param: key_name }
       image: { get_param: image }
       flavor: { get_param: flavor }
+      user_data_format: SOFTWARE_CONFIG
 
 outputs:
-  server_networks:
-    description: networks of the deployed server
-    value: { get_attr: [server, networks] }
-  server_ip:
-    description: first IP of the deployed server
-    value: { get_attr: [server, networks, private, 1] }
   server_id:
     description: Nova ID of the deployed server
     value: { get_resource: server }

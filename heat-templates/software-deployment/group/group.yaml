@@ -1,0 +1,53 @@
+heat_template_version: 2014-10-16
+
+parameters:
+
+  image:
+    type: string
+    default: fedora-sd
+
+  key_name:
+    type: string
+    default: heat-key
+
+  flavor:
+    type: string
+    default: m1.small
+
+  node_count:
+    type: number
+    default: 2
+
+resources:
+
+  servers:
+    type: OS::Heat::ResourceGroup
+    properties:
+      count: { get_param: node_count }
+      resource_def:
+        type: server-wrapper.yaml
+        properties:
+          key_name: { get_param: key_name }
+          image: { get_param: image }
+          flavor: { get_param: flavor }
+
+  my_config:
+    type: OS::Heat::SoftwareConfig
+    properties:
+      group: script
+      inputs:
+      - name: filepath
+      outputs:
+      - name: result
+      config: |
+        #!/bin/sh -x
+        echo "Software Deployment" > /tmp/$filepath
+        echo "Created /tmp/$filepath on server $deploy_server_id during $deploy_action" > $heat_outputs_path.result
+
+  my_deployment_group:
+    type: OS::Heat::SoftwareDeploymentGroup
+    properties:
+      servers: { get_attr: [servers, attributes, server_id] }
+      config: { get_resource: my_config }
+      input_values:
+        filepath: deployment-file-1

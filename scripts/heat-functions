@@ -1,0 +1,26 @@
+bbo () {
+ bb openstack $*
+}
+
+hcc () {
+ bb openstack stack create $* --wait
+}
+
+hc () {
+ STACK_NAME=`basename $1 .yaml`
+ bb openstack stack create $STACK_NAME --template $STACK_NAME.yaml --wait
+}
+
+hd () {
+ STACK_NAME=`basename $1 .yaml`
+ bb openstack stack delete $STACK_NAME --yes --wait
+}
+
+hl () {
+ openstack stack list $*
+}
+
+hll () {
+ openstack stack list --nested $*
+}
+

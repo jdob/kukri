@@ -14,14 +14,6 @@ parameters:
     type: string
     default: m1.small
 
-  deploy_timeout:
-    type: number
-    default: 5
-
-  deploy_timeout_policy:
-    type: string
-    default: SKIP
-
 resources:
 
   server:
@@ -32,22 +24,23 @@ resources:
       flavor: { get_param: flavor }
       user_data_format: SOFTWARE_CONFIG
 
-  create_config:
+  my_config:
     type: OS::Heat::SoftwareConfig
     properties:
       group: script
+      inputs:
+      - name: filepath
       outputs:
-      - name: status
+      - name: result
       config: |
         #!/bin/sh -x
-        echo "About to sleep for a really long time" > $heat_outputs_path.status
-        sleep 60
+        echo "Software Deployment" > /tmp/$filepath
+        echo "Created /tmp/$filepath on server $deploy_server_id during $deploy_action" > $heat_outputs_path.result
 
-  create_deployment:
+  my_deployment:
     type: OS::Heat::SoftwareDeployment
     properties:
       server: { get_resource: server }
-      config: { get_resource: create_config }
-      actions: ['CREATE']
-      timeout: { get_param: deploy_timeout }
-      timeout_policy: { get_param: deploy_timeout_policy }
+      config: { get_resource: my_config }
+      input_values:
+        filepath: deployment-file-1
